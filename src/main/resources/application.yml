@@ -1,18 +1,18 @@
 spring:
   security:
     oauth2:
-      client:
-        registration:
-          auth0:
-            client-id: DNo4kzMeIbciiuT5rW1clQKAfXuMQHMD
-            client-secret: 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
-            scope:
-              - openid
-              - profile
-              - email
-        provider:
-          auth0:
-            issuer-uri: https://guidetap.us.auth0.com/
+      resourceserver:
+        jwt:
+          jwk-set-uri: https://guidetap.us.auth0.com/.well-known/jwks.json
+          issuer-uri: https://guidetap.us.auth0.com/
+
+auth0:
+  client-id: ${AUTH0_CLIENT_ID:}
+  client-secret: ${AUTH0_CLIENT_SECRET:}
+
+login:
+  client:
+    web-redirect-url: http://localhost:3000/login/callback
 
 logging:
   level:

@@ -8,9 +8,23 @@ import org.springframework.security.web.server.SecurityWebFilterChain
 @Configuration
 class SecurityConfig {
 
-//    @Bean
-//    fun securityWebFilterChain(http: ServerHttpSecurity): SecurityWebFilterChain {
-//        http.oauth2Login()
-//        return http.build()
-//    }
+  @Bean
+  fun securityWebFilterChain(http: ServerHttpSecurity): SecurityWebFilterChain =
+      http.also {
+        it
+            .csrf().disable()
+            .httpBasic().disable()
+            .formLogin().disable()
+            .authorizeExchange()
+            .pathMatchers(
+                "/api/v1/login/code/*",
+                "/api/v1/login/code/exchange",
+                "/api/v1/login/code/exchange/",
+            ).permitAll()
+            .anyExchange().authenticated()
+            .and()
+            .oauth2ResourceServer()
+            .jwt()
+      }
+          .build()
 }

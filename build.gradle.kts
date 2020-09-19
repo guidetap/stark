@@ -1,10 +1,10 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    id("org.springframework.boot") version "2.3.3.RELEASE"
+    id("org.springframework.boot") version "2.3.4.RELEASE"
     id("io.spring.dependency-management") version "1.0.10.RELEASE"
-    kotlin("jvm") version "1.3.72"
-    kotlin("plugin.spring") version "1.3.72"
+    kotlin("jvm") version "1.4.10"
+    kotlin("plugin.spring") version "1.4.10"
 }
 
 group = "com.guidetap"
@@ -15,8 +15,11 @@ repositories {
     mavenCentral()
 }
 
+val ktorVersion = "1.4.0"
+
 dependencies {
     implementation("org.springframework.boot:spring-boot-starter-webflux")
+    implementation("org.springframework.boot:spring-boot-starter-validation")
 
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
     implementation("io.projectreactor.kotlin:reactor-kotlin-extensions")
@@ -27,7 +30,14 @@ dependencies {
     implementation ("org.springframework.boot:spring-boot-starter-security")
     implementation ("org.springframework.security:spring-security-oauth2-resource-server")
     implementation ("org.springframework.security:spring-security-oauth2-jose")
-    implementation ("org.springframework.security:spring-security-oauth2-client")
+
+    implementation ("io.ktor:ktor-client:$ktorVersion")
+    implementation ("io.ktor:ktor-client-json:$ktorVersion")
+    implementation ("io.ktor:ktor-client-jackson:$ktorVersion")
+    implementation ("io.ktor:ktor-client-json-jvm:$ktorVersion")
+    implementation ("io.ktor:ktor-client-jetty:$ktorVersion")
+    implementation ("io.ktor:ktor-client-cio:$ktorVersion")
+    implementation ("io.ktor:ktor-client-logging-jvm:$ktorVersion")
 
     testImplementation("org.springframework.boot:spring-boot-starter-test") {
         exclude(group = "org.junit.vintage", module = "junit-vintage-engine")
