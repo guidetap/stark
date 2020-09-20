@@ -12,7 +12,7 @@ import io.ktor.http.*
 import org.springframework.stereotype.Component
 
 @Component
-class Auth0Client(
+class AuthenticationClient(
     private val auth0HttpClient: HttpClient,
     private val auth0Properties: Auth0Properties,
     private val loginClientProperties: LoginClientProperties

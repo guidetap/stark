@@ -1,14 +1,14 @@
 package com.guidetap.stark.service
 
-import com.guidetap.stark.client.Auth0Client
+import com.guidetap.stark.client.AuthenticationClient
 import org.springframework.stereotype.Service
 
 @Service
 class CodeExchangeService(
-    private val auth0Client: Auth0Client
+    private val authenticationClient: AuthenticationClient
 ) {
 
-  suspend fun exchangeCode(code: String) = auth0Client.getToken(code)
+  suspend fun exchangeCode(code: String) = authenticationClient.getToken(code)
 
 }
 

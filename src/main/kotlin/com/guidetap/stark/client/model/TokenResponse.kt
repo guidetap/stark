@@ -6,7 +6,7 @@ data class TokenResponse(
     @JsonProperty("access_token")
     val accessToken: String,
     @JsonProperty("id_token")
-    val idToken: String,
+    val idToken: String?,
     val scope: String,
     @JsonProperty("expires_in")
     val expireIn: Long,

@@ -9,6 +9,7 @@ spring:
 auth0:
   client-id: ${AUTH0_CLIENT_ID:}
   client-secret: ${AUTH0_CLIENT_SECRET:}
+  audience: https://guidetap.us.auth0.com/api/v2/
 
 login:
   client:

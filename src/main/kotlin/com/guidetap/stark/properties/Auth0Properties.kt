@@ -15,4 +15,7 @@ class Auth0Properties {
 
   @NotBlank
   var clientSecret: String = ""
+
+  @NotBlank
+  var audience: String = ""
 }
