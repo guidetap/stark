@@ -12,7 +12,7 @@ class ShopifyClient(
     private val shopifyHttpClient: HttpClient
 ) {
 
-  suspend fun getCustomers(domain: String, token: String, sinceId: String?): CustomerResponse =
+  suspend fun getCustomers(domain: String, token: String, sinceId: Long?): CustomerResponse =
       shopifyHttpClient.get("/admin/api/2020-07/customers.json") {
         url {
           host = domain
