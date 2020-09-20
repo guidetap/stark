@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty
 
 data class UserResponse(
     val email: String,
+    val domain: String,
     val identities: List<Identity>
 )
 

@@ -28,6 +28,11 @@ class HttpClientConfiguration {
     installBasicHttpClient()
   }
 
+  @Bean
+  fun shopifyHttpClient() = HttpClient(CIO) {
+    installBasicHttpClient()
+  }
+
   private fun HttpClientConfig<CIOEngineConfig>.installBasicHttpClient() {
     install(JsonFeature) {
       serializer = JacksonSerializer(

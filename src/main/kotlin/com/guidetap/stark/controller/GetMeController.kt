@@ -3,7 +3,6 @@ package com.guidetap.stark.controller
 import com.guidetap.stark.service.ManagementAPIService
 import kotlinx.coroutines.reactive.awaitFirst
 import org.springframework.security.core.context.ReactiveSecurityContextHolder
-import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
@@ -23,9 +22,7 @@ class GetMeController(
   suspend fun getFromAuth0() = ReactiveSecurityContextHolder.getContext()
       .awaitFirst()
       .authentication
-      .takeIf { it is JwtAuthenticationToken }
-      ?.let { it as JwtAuthenticationToken }
-      ?.name
+      .name
       ?.let { managementAPIService.getUserData(it) }
 
 }
