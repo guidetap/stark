@@ -10,8 +10,8 @@ spring:
       host: ${MONGO_HOST:localhost}
       port: ${MONGO_PORT:27017}
       database: ${MONGO_DATABASE:guidetap}
-      username: ${MONGO_USER:-root}
-      password: ${MONGO_PASS:-secret}
+      username: ${MONGO_USER:root}
+      password: ${MONGO_PASS:secret}
       authentication-database: admin
 
 auth0:

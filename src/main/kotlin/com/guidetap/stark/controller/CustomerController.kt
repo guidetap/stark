@@ -29,7 +29,7 @@ class CustomerController(
           .map { customerConverter.convert(it) }
 
   @PutMapping("sync")
-  fun syncCustomers(@AuthenticationPrincipal authentication: Authentication): Flow<BsonValue?> =
+  fun syncCustomer(@AuthenticationPrincipal authentication: Authentication): Flow<BsonValue?> =
       shopifySyncService.syncShopifyCustomersFor(authentication.name)
 
 }

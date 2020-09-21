@@ -9,7 +9,7 @@ class CustomerEntityRepository(
     mongoDatabase: CoroutineDatabase
 ) {
 
-  private val col = mongoDatabase.getCollection<CustomerEntity>("customers")
+  private val col = mongoDatabase.getCollection<CustomerEntity>("Customers")
 
   suspend fun insert(entity: CustomerEntity) =
       col.insertOne(entity)
