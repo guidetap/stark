@@ -1,7 +1,7 @@
 package com.guidetap.stark.client.model
 
 import com.fasterxml.jackson.annotation.JsonProperty
-import java.time.LocalDateTime
+import java.time.ZonedDateTime
 
 data class CustomerResponse(
     val customers: List<Customer>
@@ -13,13 +13,13 @@ data class Customer(
     @JsonProperty("accepts_marketing")
     val acceptsMarketing: Boolean,
     @JsonProperty("created_at")
-    val createdAt: LocalDateTime,
+    val createdAt: ZonedDateTime,
     @JsonProperty("updated_at")
-    val updatedAt: LocalDateTime,
+    val updatedAt: ZonedDateTime,
     @JsonProperty("first_name")
-    val firstName: String,
+    val firstName: String?,
     @JsonProperty("last_name")
-    val lastName: String,
+    val lastName: String?,
     @JsonProperty("orders_count")
     val ordersCount: Long,
     val state: String,
@@ -34,14 +34,14 @@ data class Customer(
     val multipassIdentifier: String?,
     @JsonProperty("tax_exempt")
     val taxExempt: Boolean,
-    val phone: String,
+    val phone: String?,
     val tags: String,
     @JsonProperty("last_order_name")
-    val lastOrderName: String,
+    val lastOrderName: String?,
     val currency: String,
     val addresses: List<Address>,
     @JsonProperty("accepts_marketing_updated_at")
-    val acceptsMarketingUpdatedAt: LocalDateTime,
+    val acceptsMarketingUpdatedAt: ZonedDateTime,
     @JsonProperty("marketing_opt_in_level")
     val marketingOptInLevel: String?,
     @JsonProperty("tax_exemptions")
@@ -49,7 +49,7 @@ data class Customer(
     @JsonProperty("admin_graphql_api_id")
     val adminGraphqlApiId: String,
     @JsonProperty("default_address")
-    val defaultAddress: Address,
+    val defaultAddress: Address?,
 )
 
 data class Address(
@@ -61,19 +61,19 @@ data class Address(
     @JsonProperty("last_name")
     val lastName: String?,
     val company: String?,
-    val address1: String,
-    val address2: String,
-    val city: String,
-    val province: String,
-    val country: String,
-    val zip: String,
-    val phone: String,
-    val name: String,
+    val address1: String?,
+    val address2: String?,
+    val city: String?,
+    val province: String?,
+    val country: String?,
+    val zip: String?,
+    val phone: String?,
+    val name: String?,
     @JsonProperty("province_code")
-    val provinceCode: String,
+    val provinceCode: String?,
     @JsonProperty("country_code")
-    val countryCode: String,
+    val countryCode: String?,
     @JsonProperty("country_name")
-    val countryName: String,
+    val countryName: String?,
     val default: Boolean,
 )
