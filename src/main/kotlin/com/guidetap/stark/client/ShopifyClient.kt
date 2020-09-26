@@ -23,6 +23,7 @@ class ShopifyClient(
         }
         header(SHOPIFY_TOKEN_HEADER, token)
         pageInfo?.let { parameter("page_info", it) }
+        parameter("limit", 250)
       }
           .let {
             PaginatedCustomerResponse(

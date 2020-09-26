@@ -5,7 +5,7 @@ import java.time.ZonedDateTime
 
 data class CustomerEntity(
     val shopifyId: Long,
-    val email: String,
+    val email: String?,
     val acceptsMarketing: Boolean,
     val createdAt: ZonedDateTime,
     val updatedAt: ZonedDateTime,

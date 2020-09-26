@@ -14,7 +14,7 @@ data class CustomerResponse(
 
 data class Customer(
     val id: Long,
-    val email: String,
+    val email: String?,
     @JsonProperty("accepts_marketing")
     val acceptsMarketing: Boolean,
     @JsonProperty("created_at")
