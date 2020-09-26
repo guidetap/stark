@@ -3,7 +3,9 @@ package com.guidetap.stark.service
 import com.guidetap.stark.client.model.Customer
 import com.guidetap.stark.converter.Converter
 import com.guidetap.stark.repository.model.CustomerEntity
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+import org.bson.BsonValue
 import org.springframework.stereotype.Service
 
 @Service
@@ -13,7 +15,7 @@ class ShopifySyncService(
     private val customerEntityService: CustomerEntityService
 ) {
 
-  fun syncShopifyCustomersFor(userId: String) =
+  fun syncShopifyCustomersFor(userId: String): Flow<BsonValue?> =
       shopifyCustomerService.getAllCustomers(userId)
           .map { customerConverter.convert(it) }
           .map { customerEntityService.insert(it) }

@@ -1,6 +1,7 @@
 package com.guidetap.stark.repository
 
 import com.guidetap.stark.repository.model.CustomerEntity
+import com.mongodb.client.result.InsertOneResult
 import org.litote.kmongo.coroutine.CoroutineDatabase
 import org.springframework.stereotype.Repository
 
@@ -11,6 +12,6 @@ class CustomerEntityRepository(
 
   private val col = mongoDatabase.getCollection<CustomerEntity>("Customers")
 
-  suspend fun insert(entity: CustomerEntity) =
+  suspend fun insert(entity: CustomerEntity): InsertOneResult =
       col.insertOne(entity)
 }
