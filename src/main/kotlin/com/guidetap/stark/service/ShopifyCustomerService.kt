@@ -2,43 +2,43 @@ package com.guidetap.stark.service
 
 import com.guidetap.stark.client.ShopifyClient
 import com.guidetap.stark.client.model.Customer
+import com.guidetap.stark.client.model.PaginatedCustomerResponse
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.map
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
 
 @Service
 class ShopifyCustomerService(
     private val shopifyClient: ShopifyClient,
-    private val managementAPIService: ManagementAPIService
+    private val managementAPIService: ManagementAPIService,
+    private val urlParser: UrlParser
 ) {
 
   private val log = LoggerFactory.getLogger(javaClass)
 
-  suspend fun getCustomers(userId: String, sinceId: Long? = null): List<Customer> =
+  suspend fun getCustomers(userId: String, pageInfo: String? = null): PaginatedCustomerResponse =
       managementAPIService.getUserData(userId)
           .let {
             shopifyClient.getCustomers(
                 domain = it.domain,
                 token = it.identities.first().accessToken,
-                sinceId = sinceId
+                pageInfo = pageInfo
             )
           }
-          .customers
 
   fun getAllCustomers(userId: String): Flow<Customer> =
       flow {
         log.info("process='getAllCustomers' message='has been started' userId='$userId'")
-        var sinceId: Long? = null
+        var pageInfo: String? = null
         while (true) {
-          log.info("process='getAllCustomers' message='new request prepared' userId='$userId' sinceId='$sinceId'")
-          val customerSince = getCustomers(userId, sinceId)
-          if (customerSince.isEmpty()) {
+          log.info("process='getAllCustomers' message='new request prepared' userId='$userId' pageInfo='$pageInfo'")
+          val customerSince = getCustomers(userId, pageInfo)
+          if (customerSince.pageInfoUrl == null) {
             break
           }
-          sinceId = customerSince.lastOrNull()?.id
-          customerSince.forEach {
+          pageInfo = urlParser.extractParamUrl(customerSince.pageInfoUrl, "page_info")
+          customerSince.customerResponse.customers.forEach {
             emit(it)
           }
         }

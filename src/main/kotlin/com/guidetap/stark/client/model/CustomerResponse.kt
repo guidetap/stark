@@ -3,8 +3,13 @@ package com.guidetap.stark.client.model
 import com.fasterxml.jackson.annotation.JsonProperty
 import java.time.ZonedDateTime
 
+data class PaginatedCustomerResponse(
+    val customerResponse: CustomerResponse,
+    val pageInfoUrl: String?
+)
+
 data class CustomerResponse(
-    val customers: List<Customer>
+    val customers: List<Customer>,
 )
 
 data class Customer(
