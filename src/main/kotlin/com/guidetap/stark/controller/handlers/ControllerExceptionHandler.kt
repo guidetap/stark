@@ -13,10 +13,10 @@ class ControllerExceptionHandler {
 
   @ExceptionHandler(ClientRequestException::class)
   fun handleClientError(ex: ClientRequestException): ResponseEntity<ErrorEntity> =
-      ex.let {
-        log.warn("Exception during client request message=${ex.message}", ex)
-        ResponseEntity.badRequest()
-            .body(ErrorEntity(ex.message ?: "Unrecognized error message"))
-      }
+    ex.let {
+      log.warn("Exception during client request message=${ex.message}", ex)
+      ResponseEntity.badRequest()
+        .body(ErrorEntity(ex.message ?: "Unrecognized error message"))
+    }
 }
 

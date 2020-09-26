@@ -11,25 +11,25 @@ import org.springframework.stereotype.Component
 
 @Component
 class ShopifyClient(
-    private val shopifyHttpClient: HttpClient,
-    private val pageInfoExtractor: PageInfoExtractor
+  private val shopifyHttpClient: HttpClient,
+  private val pageInfoExtractor: PageInfoExtractor
 ) {
 
   suspend fun getCustomers(domain: String, token: String, pageInfo: String?): PaginatedCustomerResponse =
-      shopifyHttpClient.get<HttpResponse>("/admin/api/2020-07/customers.json") {
-        url {
-          host = domain
-          protocol = URLProtocol.HTTPS
-        }
-        header(SHOPIFY_TOKEN_HEADER, token)
-        pageInfo?.let { parameter("page_info", it) }
-        parameter("limit", 250)
+    shopifyHttpClient.get<HttpResponse>("/admin/api/2020-07/customers.json") {
+      url {
+        host = domain
+        protocol = URLProtocol.HTTPS
       }
-          .let {
-            PaginatedCustomerResponse(
-                it.receive(),
-                it.headers["Link"]?.let { link -> pageInfoExtractor.extractPageInfo(link) }
-            )
-          }
+      header(SHOPIFY_TOKEN_HEADER, token)
+      pageInfo?.let { parameter("page_info", it) }
+      parameter("limit", 250)
+    }
+      .let {
+        PaginatedCustomerResponse(
+          it.receive(),
+          it.headers["Link"]?.let { link -> pageInfoExtractor.extractPageInfo(link) }
+        )
+      }
 
 }

@@ -10,19 +10,22 @@ import org.springframework.stereotype.Repository
 
 @Repository
 class BrandUserEntityRepository(
-    mongoDatabase: CoroutineDatabase
+  mongoDatabase: CoroutineDatabase
 ) {
   private val col = mongoDatabase.getCollection<BrandUserEntity>("BrandUsers")
 
   suspend fun insert(entity: BrandUserEntity): BrandUserEntity =
-      col.findOneAndReplace(
-          BrandUserEntity::auth0Id eq entity.auth0Id,
-          entity,
-          FindOneAndReplaceOptions()
-              .upsert(true)
-              .returnDocument(ReturnDocument.AFTER)
-      )
+    col.findOneAndReplace(
+      BrandUserEntity::auth0Id eq entity.auth0Id,
+      entity,
+      FindOneAndReplaceOptions()
+        .upsert(true)
+        .returnDocument(ReturnDocument.AFTER)
+    )
+
+  suspend fun findById(auth0Id: String): BrandUserEntity? =
+    col.findOne(BrandUserEntity::auth0Id eq auth0Id)
 
   fun findAll(): Flow<BrandUserEntity> =
-      col.find().toFlow()
+    col.find().toFlow()
 }

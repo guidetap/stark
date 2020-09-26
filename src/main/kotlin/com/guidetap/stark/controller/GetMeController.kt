@@ -10,19 +10,19 @@ import org.springframework.web.bind.annotation.RestController
 @RestController
 @RequestMapping("/api/v1/me")
 class GetMeController(
-    private val managementAPIService: ManagementAPIService
+  private val managementAPIService: ManagementAPIService
 ) {
 
   @GetMapping
   suspend fun getMe() = ReactiveSecurityContextHolder.getContext()
-      .map { it.authentication }
-      .awaitFirst()
+    .map { it.authentication }
+    .awaitFirst()
 
   @GetMapping("/auth0")
   suspend fun getFromAuth0() = ReactiveSecurityContextHolder.getContext()
-      .awaitFirst()
-      .authentication
-      .name
-      ?.let { managementAPIService.getUserData(it) }
+    .awaitFirst()
+    .authentication
+    .name
+    ?.let { managementAPIService.getUserData(it) }
 
 }

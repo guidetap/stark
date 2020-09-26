@@ -1,0 +1,14 @@
+auth0:
+  client-id: fake
+  client-secret: fake
+  audience: https://guidetap.us.auth0.com/api/v2/
+
+login:
+  client:
+    web-redirect-url: http://localhost:3000/login/callback
+
+logging:
+  level:
+    org:
+      springframework:
+        web: DEBUG

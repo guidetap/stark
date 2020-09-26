@@ -36,12 +36,12 @@ class HttpClientConfiguration {
   private fun HttpClientConfig<CIOEngineConfig>.installBasicHttpClient() {
     install(JsonFeature) {
       serializer = JacksonSerializer(
-          ObjectMapper()
-              .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
-              .configure(DeserializationFeature.ADJUST_DATES_TO_CONTEXT_TIME_ZONE, false)
-              .configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false)
-              .registerModule(KotlinModule())
-              .also { it.findAndRegisterModules() }
+        ObjectMapper()
+          .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
+          .configure(DeserializationFeature.ADJUST_DATES_TO_CONTEXT_TIME_ZONE, false)
+          .configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false)
+          .registerModule(KotlinModule())
+          .also { it.findAndRegisterModules() }
       )
     }
     install(Logging) {

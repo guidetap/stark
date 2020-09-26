@@ -9,8 +9,8 @@ import org.springframework.stereotype.Service
 
 @Service
 class CustomerSyncScheduler(
-    private val brandUserEntityService: BrandUserEntityService,
-    private val shopifySyncService: ShopifySyncService
+  private val brandUserEntityService: BrandUserEntityService,
+  private val shopifySyncService: ShopifySyncService
 ) {
 
   private val log = LoggerFactory.getLogger(javaClass)
@@ -20,12 +20,12 @@ class CustomerSyncScheduler(
     log.info("process='syncCustomers' message='sync job has been started'")
     runBlocking {
       brandUserEntityService.findAll()
-          .collect {
-            log.info("process='syncCustomers' message='next customer picked' userId='${it.auth0Id}'")
-            val synced = shopifySyncService.syncShopifyCustomersFor(it.auth0Id)
-                .count()
-            log.info("process='syncCustomers' message='customer sync completed' userId='${it.auth0Id}' count='$synced'")
-          }
+        .collect {
+          log.info("process='syncCustomers' message='next customer picked' userId='${it.auth0Id}'")
+          val synced = shopifySyncService.syncShopifyCustomersFor(it.auth0Id)
+            .count()
+          log.info("process='syncCustomers' message='customer sync completed' userId='${it.auth0Id}' count='$synced'")
+        }
     }
     log.info("process='syncCustomers' message='sync job has been completed'")
   }

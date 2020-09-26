@@ -9,5 +9,5 @@ import org.springframework.scheduling.annotation.EnableScheduling
 class StarkApplication
 
 fun main(args: Array<String>) {
-    runApplication<StarkApplication>(*args)
+  runApplication<StarkApplication>(*args)
 }

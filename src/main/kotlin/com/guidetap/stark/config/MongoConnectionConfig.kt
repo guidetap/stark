@@ -13,6 +13,6 @@ class MongoConnectionConfig {
 
   @Bean
   fun mongoDatabase(mongoClient: MongoClient, mongoProperties: MongoProperties): CoroutineDatabase =
-      mongoClient.getDatabase(mongoProperties.database).withKMongo().coroutine
+    mongoClient.getDatabase(mongoProperties.database).withKMongo().coroutine
 
 }

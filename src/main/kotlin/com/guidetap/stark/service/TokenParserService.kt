@@ -7,8 +7,8 @@ import org.springframework.stereotype.Service
 
 @Service
 class TokenParserService(
-    private val jwtDecoder: ReactiveJwtDecoder
+  private val jwtDecoder: ReactiveJwtDecoder
 ) {
   suspend fun getIdFromToken(jwtToken: String): String =
-      JwtAuthenticationToken(jwtDecoder.decode(jwtToken).awaitFirst()).name
+    JwtAuthenticationToken(jwtDecoder.decode(jwtToken).awaitFirst()).name
 }

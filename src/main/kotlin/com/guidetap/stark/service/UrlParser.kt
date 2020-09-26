@@ -7,5 +7,5 @@ import org.springframework.stereotype.Service
 class UrlParser {
 
   fun extractParamUrl(url: String?, param: String): String? =
-      url?.let { Url(it) }?.parameters?.get(param)
+    url?.let { Url(it) }?.parameters?.get(param)
 }

@@ -12,10 +12,10 @@ import javax.validation.Valid
 @RestController
 @RequestMapping("/api/v1/login/code")
 class CodeExchangeController(
-    private val completeSignInService: CompleteSignInService
+  private val completeSignInService: CompleteSignInService
 ) {
 
   @PostMapping("exchange")
   suspend fun exchangeCode(@RequestBody @Valid body: CodeExchangeRequestBody): TokenResponse =
-      completeSignInService.completeSignIn(body.code)
+    completeSignInService.completeSignIn(body.code)
 }

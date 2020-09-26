@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service
 
 @Service
 class CodeExchangeService(
-    private val authenticationClient: AuthenticationClient
+  private val authenticationClient: AuthenticationClient
 ) {
 
   suspend fun exchangeCode(code: String): TokenResponse = authenticationClient.getToken(code)

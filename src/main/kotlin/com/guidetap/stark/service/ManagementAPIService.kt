@@ -5,13 +5,13 @@ import org.springframework.stereotype.Service
 
 @Service
 class ManagementAPIService(
-    private val managementClient: ManagementClient
+  private val managementClient: ManagementClient
 ) {
 
   suspend fun getManagementToken() =
-      managementClient.getManagementToken()
+    managementClient.getManagementToken()
 
   suspend fun getUserData(userId: String) =
-      managementClient.getUserById(userId, managementClient.getManagementToken().accessToken)
+    managementClient.getUserById(userId, managementClient.getManagementToken().accessToken)
 
 }

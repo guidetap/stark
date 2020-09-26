@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service
 
 @Service
 class BrandUserEntityService(
-    private val brandUserEntityRepository: BrandUserEntityRepository
+  private val brandUserEntityRepository: BrandUserEntityRepository
 ) {
 
   suspend fun insert(entity: BrandUserEntity) = brandUserEntityRepository.insert(entity)

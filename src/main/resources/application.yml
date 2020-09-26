@@ -23,8 +23,3 @@ login:
   client:
     web-redirect-url: http://localhost:3000/login/callback
 
-logging:
-  level:
-    org:
-      springframework:
-        web: DEBUG
