@@ -10,12 +10,18 @@ import javax.validation.constraints.NotBlank
 @ConfigurationProperties("auth0")
 class Auth0Properties {
 
-  @NotBlank
-  var clientId: String = ""
+  var brand = App()
 
-  @NotBlank
-  var clientSecret: String = ""
+  var user = App()
 
-  @NotBlank
-  var audience: String = ""
+  class App {
+    @NotBlank
+    var clientId: String = ""
+
+    @NotBlank
+    var clientSecret: String = ""
+
+    @NotBlank
+    var audience: String = ""
+  }
 }

@@ -13,11 +13,11 @@ class ManagementAPIService(
 ) {
 
   suspend fun getManagementToken() =
-    managementClient.getManagementToken()
+    managementClient.getBrandManagementToken()
 
   @Cacheable("user-data")
   suspend fun getUserData(userId: String): UserResponse =
-    cache.get(userId) ?: managementClient.getUserById(userId, managementClient.getManagementToken().accessToken)
+    cache.get(userId) ?: managementClient.getUserById(userId, managementClient.getBrandManagementToken().accessToken)
       .also { cache.put(userId, it) }
 
 }

@@ -15,9 +15,14 @@ spring:
       authentication-database: admin
 
 auth0:
-  client-id: ${AUTH0_CLIENT_ID:}
-  client-secret: ${AUTH0_CLIENT_SECRET:}
-  audience: https://guidetap.us.auth0.com/api/v2/
+  brand:
+    client-id: ${BRAND_AUTH0_CLIENT_ID:}
+    client-secret: ${BRAND_AUTH0_CLIENT_SECRET:}
+    audience: https://guidetap.us.auth0.com/api/v2/
+  user:
+    client-id: ${USER_AUTH0_CLIENT_ID:}
+    client-secret: ${USER_AUTH0_CLIENT_SECRET:}
+    audience: https://guidetap.us.auth0.com/api/v2/
 
 login:
   client:

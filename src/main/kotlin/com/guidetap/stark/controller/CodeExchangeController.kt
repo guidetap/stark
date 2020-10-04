@@ -15,7 +15,11 @@ class CodeExchangeController(
   private val completeSignInService: CompleteSignInService
 ) {
 
-  @PostMapping("exchange")
-  suspend fun exchangeCode(@RequestBody @Valid body: CodeExchangeRequestBody): TokenResponse =
-    completeSignInService.completeSignIn(body.code)
+  @PostMapping("brand/exchange")
+  suspend fun exchangeBrand(@RequestBody @Valid body: CodeExchangeRequestBody): TokenResponse =
+    completeSignInService.completeBrandSignIn(body.code)
+
+  @PostMapping("user/exchange")
+  suspend fun exchangeUserCode(@RequestBody @Valid body: CodeExchangeRequestBody): TokenResponse =
+    completeSignInService.completeUserSignIn(body.code)
 }

@@ -9,7 +9,9 @@ class CodeExchangeService(
   private val authenticationClient: AuthenticationClient
 ) {
 
-  suspend fun exchangeCode(code: String): TokenResponse = authenticationClient.getToken(code)
+  suspend fun exchangeBrandCode(code: String): TokenResponse = authenticationClient.getBrandToken(code)
+
+  suspend fun exchangeUserCode(code: String): TokenResponse = authenticationClient.getUserToken(code)
 
 }
 

@@ -16,7 +16,7 @@ class ManagementClient(
   private val auth0Properties: Auth0Properties
 ) {
 
-  suspend fun getManagementToken(): TokenResponse =
+  suspend fun getBrandManagementToken(): TokenResponse =
     auth0HttpClient.post(urlString = "/oauth/token") {
       url {
         host = HttpClientConfiguration.AUTH0_HOST
@@ -24,9 +24,9 @@ class ManagementClient(
       }
       header(HttpHeaders.ContentType, ContentType.Application.Json)
       body = ManagementTokenRequestBody(
-        clientId = auth0Properties.clientId,
-        clientSecret = auth0Properties.clientSecret,
-        audience = auth0Properties.audience,
+        clientId = auth0Properties.brand.clientId,
+        clientSecret = auth0Properties.brand.clientSecret,
+        audience = auth0Properties.brand.audience,
         grantType = "client_credentials"
       )
     }

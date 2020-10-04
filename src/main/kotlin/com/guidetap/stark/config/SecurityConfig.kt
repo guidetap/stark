@@ -18,8 +18,8 @@ class SecurityConfig {
         .authorizeExchange()
         .pathMatchers(
           "/api/v1/login/code/*",
-          "/api/v1/login/code/exchange",
-          "/api/v1/login/code/exchange/",
+          "/api/v1/login/code/brand/exchange",
+          "/api/v1/login/code/user/exchange",
         ).permitAll()
         .anyExchange().authenticated()
         .and()

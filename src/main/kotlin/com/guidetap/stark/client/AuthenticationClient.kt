@@ -17,8 +17,14 @@ class AuthenticationClient(
   private val loginClientProperties: LoginClientProperties
 ) {
 
-  suspend fun getToken(code: String): TokenResponse =
-    auth0HttpClient.post(urlString = "/oauth/token") {
+  suspend fun getBrandToken(code: String): TokenResponse =
+    tokenResponse(code, auth0Properties.brand.clientId, auth0Properties.brand.clientSecret)
+
+  suspend fun getUserToken(code: String): TokenResponse =
+    tokenResponse(code, auth0Properties.user.clientId, auth0Properties.user.clientSecret)
+
+  private suspend fun tokenResponse(code: String, clientId: String, clientSecret: String): TokenResponse {
+    return auth0HttpClient.post(urlString = "/oauth/token") {
       url {
         host = HttpClientConfiguration.AUTH0_HOST
         protocol = URLProtocol.HTTPS
@@ -26,11 +32,12 @@ class AuthenticationClient(
       body = FormDataContent(
         Parameters.build {
           append("code", code)
-          append("client_id", auth0Properties.clientId)
-          append("client_secret", auth0Properties.clientSecret)
+          append("client_id", clientId)
+          append("client_secret", clientSecret)
           append("grant_type", "authorization_code")
           append("redirect_uri", loginClientProperties.webRedirectUrl)
         }
       )
     }
+  }
 }

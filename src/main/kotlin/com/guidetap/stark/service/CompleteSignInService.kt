@@ -10,8 +10,8 @@ class CompleteSignInService(
   private val tokenParserService: TokenParserService
 ) {
 
-  suspend fun completeSignIn(code: String) =
-    codeExchangeService.exchangeCode(code)
+  suspend fun completeBrandSignIn(code: String) =
+    codeExchangeService.exchangeBrandCode(code)
       .also {
         it.idToken
           ?.also { jwtToken ->
@@ -22,4 +22,7 @@ class CompleteSignInService(
             )
           }
       }
+
+  suspend fun completeUserSignIn(code: String) =
+    codeExchangeService.exchangeUserCode(code)
 }
