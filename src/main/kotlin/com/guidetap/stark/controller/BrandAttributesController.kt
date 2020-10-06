@@ -1,7 +1,5 @@
 package com.guidetap.stark.controller
 
-import com.fasterxml.jackson.annotation.JsonAnyGetter
-import com.fasterxml.jackson.annotation.JsonAnySetter
 import com.guidetap.stark.controller.model.AttributesRequestBody
 import com.guidetap.stark.service.BrandAttributesService
 import org.springframework.security.core.Authentication
@@ -13,6 +11,10 @@ import org.springframework.web.bind.annotation.*
 class BrandAttributesController(
   private val brandAttributesService: BrandAttributesService
 ) {
+
+  @GetMapping
+  suspend fun findAll(@AuthenticationPrincipal authentication: Authentication) =
+    brandAttributesService.findAll(authentication.name)
 
   @PutMapping
   suspend fun save(

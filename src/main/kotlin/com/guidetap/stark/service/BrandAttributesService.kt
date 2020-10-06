@@ -4,6 +4,7 @@ import com.guidetap.stark.controller.model.AttributesRequestBody
 import com.guidetap.stark.repository.BrandAttributesRepository
 import com.guidetap.stark.repository.model.AttributeMetadataEntity
 import com.guidetap.stark.repository.model.BrandAttributesEntity
+import kotlinx.coroutines.flow.Flow
 import org.springframework.stereotype.Service
 
 @Service
@@ -22,4 +23,7 @@ class BrandAttributesService(
           .toMap()
       )
     )
+
+  fun findAll(name: String): Flow<BrandAttributesEntity> =
+    brandAttributesRepository.findAll(name)
 }
