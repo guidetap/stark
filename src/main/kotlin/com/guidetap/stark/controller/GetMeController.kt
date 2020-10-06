@@ -2,6 +2,8 @@ package com.guidetap.stark.controller
 
 import com.guidetap.stark.service.ManagementAPIService
 import kotlinx.coroutines.reactive.awaitFirst
+import org.springframework.security.core.Authentication
+import org.springframework.security.core.annotation.AuthenticationPrincipal
 import org.springframework.security.core.context.ReactiveSecurityContextHolder
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RequestMapping
@@ -14,9 +16,7 @@ class GetMeController(
 ) {
 
   @GetMapping
-  suspend fun getMe() = ReactiveSecurityContextHolder.getContext()
-    .map { it.authentication }
-    .awaitFirst()
+  suspend fun getMe(@AuthenticationPrincipal authentication: Authentication) = authentication
 
   @GetMapping("/auth0")
   suspend fun getFromAuth0() = ReactiveSecurityContextHolder.getContext()
@@ -24,5 +24,4 @@ class GetMeController(
     .authentication
     .name
     ?.let { managementAPIService.getUserData(it) }
-
 }
