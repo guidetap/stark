@@ -7,7 +7,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal
 import org.springframework.web.bind.annotation.*
 
 @RestController
-@RequestMapping("/api/v1/brand/attributes")
+@RequestMapping("/brand/api/v1/attributes")
 class BrandAttributesController(
   private val brandAttributesService: BrandAttributesService
 ) {
