@@ -9,6 +9,6 @@ import org.springframework.stereotype.Service
 class TokenParserService(
   private val jwtDecoder: ReactiveJwtDecoder
 ) {
-  suspend fun getIdFromToken(jwtToken: String): String =
-    JwtAuthenticationToken(jwtDecoder.decode(jwtToken).awaitFirst()).name
+  suspend fun getIdFromToken(jwtToken: String): JwtAuthenticationToken =
+    JwtAuthenticationToken(jwtDecoder.decode(jwtToken).awaitFirst())
 }

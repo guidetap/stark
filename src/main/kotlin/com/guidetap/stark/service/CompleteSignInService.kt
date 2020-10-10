@@ -15,11 +15,17 @@ class CompleteSignInService(
       .also {
         it.idToken
           ?.also { jwtToken ->
-            brandUserEntityService.insert(
-              BrandUserEntity(
-                auth0Id = tokenParserService.getIdFromToken(jwtToken)
-              )
-            )
+            tokenParserService.getIdFromToken(jwtToken)
+              .let { parsedToken ->
+                brandUserEntityService.insert(
+                  BrandUserEntity(
+                    auth0Id = parsedToken.name,
+                    nickname = parsedToken.token.claims["nickname"] as? String,
+                    name = parsedToken.token.claims["name"] as? String,
+                    email = parsedToken.token.claims["email"] as? String,
+                  )
+                )
+              }
           }
       }
 
