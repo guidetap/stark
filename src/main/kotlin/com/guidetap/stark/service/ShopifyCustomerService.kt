@@ -2,6 +2,7 @@ package com.guidetap.stark.service
 
 import com.guidetap.stark.client.ShopifyClient
 import com.guidetap.stark.client.model.Customer
+import com.guidetap.stark.client.model.GetCustomerRequest
 import com.guidetap.stark.client.model.PaginatedCustomerResponse
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -21,9 +22,11 @@ class ShopifyCustomerService(
     managementAPIService.getUserData(userId)
       .let {
         shopifyClient.getCustomers(
-          domain = it.domain,
-          token = it.identities.first().accessToken,
-          pageInfo = pageInfo
+          GetCustomerRequest(
+            domain = it.domain,
+            token = it.identities.first().accessToken,
+            pageInfo = pageInfo
+          )
         )
       }
 

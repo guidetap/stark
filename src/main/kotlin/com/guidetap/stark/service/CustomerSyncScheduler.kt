@@ -15,7 +15,7 @@ class CustomerSyncScheduler(
 
   private val log = LoggerFactory.getLogger(javaClass)
 
-  @Scheduled(cron = "0 0 0 * * *")
+  @Scheduled(fixedRate = 10_000)
   fun syncCustomers() {
     log.info("process='syncCustomers' message='sync job has been started'")
     runBlocking {

@@ -1,6 +1,7 @@
 package com.guidetap.stark.client
 
 import com.guidetap.stark.CommonConstants.Companion.SHOPIFY_TOKEN_HEADER
+import com.guidetap.stark.client.model.GetCustomerRequest
 import com.guidetap.stark.client.model.PaginatedCustomerResponse
 import io.ktor.client.*
 import io.ktor.client.call.*
@@ -15,14 +16,15 @@ class ShopifyClient(
   private val pageInfoExtractor: PageInfoExtractor
 ) {
 
-  suspend fun getCustomers(domain: String, token: String, pageInfo: String?): PaginatedCustomerResponse =
+  suspend fun getCustomers(getCustomerRequest: GetCustomerRequest): PaginatedCustomerResponse =
     shopifyHttpClient.get<HttpResponse>("/admin/api/2020-07/customers.json") {
       url {
-        host = domain
+        host = getCustomerRequest.domain
         protocol = URLProtocol.HTTPS
       }
-      header(SHOPIFY_TOKEN_HEADER, token)
-      pageInfo?.let { parameter("page_info", it) }
+      header(SHOPIFY_TOKEN_HEADER, getCustomerRequest.token)
+      getCustomerRequest.pageInfo?.let { parameter("page_info", it) }
+      getCustomerRequest.createdAtMin?.let { parameter("created_at_min", it) }
       parameter("limit", 250)
     }
       .let {
