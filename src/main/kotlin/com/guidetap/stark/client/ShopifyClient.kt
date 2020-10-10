@@ -25,6 +25,7 @@ class ShopifyClient(
       header(SHOPIFY_TOKEN_HEADER, getCustomerRequest.token)
       getCustomerRequest.pageInfo?.let { parameter("page_info", it) }
       getCustomerRequest.createdAtMin?.let { parameter("created_at_min", it) }
+      getCustomerRequest.updatedAtMin?.let { parameter("updated_at_min", it) }
       parameter("limit", 250)
     }
       .let {
