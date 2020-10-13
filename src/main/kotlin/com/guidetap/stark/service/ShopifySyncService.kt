@@ -5,6 +5,7 @@ import com.guidetap.stark.converter.Converter
 import com.guidetap.stark.repository.model.CustomerEntity
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.onCompletion
 import org.springframework.stereotype.Service
 
 @Service
@@ -18,4 +19,7 @@ class ShopifySyncService(
     shopifyCustomerService.getAllCustomers(userId)
       .map { customerConverter.convert(it) }
       .map { customerEntityService.insert(it) }
+      .onCompletion {
+
+      }
 }

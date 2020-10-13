@@ -1,7 +1,12 @@
 auth0:
-  client-id: fake
-  client-secret: fake
-  audience: https://guidetap.us.auth0.com/api/v2/
+  brand:
+    client-id: fake
+    client-secret: fake
+    audience: https://guidetap.us.auth0.com/api/v2/
+  user:
+    client-id: fake
+    client-secret: fake
+    audience: https://guidetap.us.auth0.com/api/v2/
 
 login:
   client:

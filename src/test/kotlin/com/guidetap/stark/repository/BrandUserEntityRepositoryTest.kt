@@ -15,7 +15,13 @@ internal class BrandUserEntityRepositoryTest(
   @Test
   fun `should insert brand entity to database`() {
     runBlocking {
-      val expected = BrandUserEntity(auth0Id = "auth0Id")
+      val expected = BrandUserEntity(
+        auth0Id = "auth0Id",
+        nickname = null,
+        name = null,
+        email = null,
+        lastSyncDate = null
+      )
       val actual = brandUserEntityRepository.insert(expected)
       assertThat(actual).isEqualTo(expected)
 
@@ -27,7 +33,13 @@ internal class BrandUserEntityRepositoryTest(
   @Test
   fun `should not insert brand entity to database for the second time`() {
     runBlocking {
-      val expected = BrandUserEntity(auth0Id = "auth0Id")
+      val expected = BrandUserEntity(
+        auth0Id = "auth0Id",
+        nickname = null,
+        name = null,
+        email = null,
+        lastSyncDate = null
+      )
       brandUserEntityRepository.insert(expected)
       val actual = brandUserEntityRepository.insert(expected)
       assertThat(actual).isEqualTo(expected)
