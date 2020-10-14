@@ -20,7 +20,7 @@ class ShopifySyncService(
   suspend fun syncShopifyCustomersFor(userId: String): Flow<CustomerEntity> =
     brandUserEntityService.findById(userId)
       ?.let { brand ->
-        shopifyCustomerService.getAllCustomers(brand.auth0Id, brand.lastSyncDate)
+        shopifyCustomerService.getAllCustomers(brand.auth0Id, brand.lastCustomerSyncDate)
           .map { customerConverter.convert(it) }
           .map { customerEntityService.insert(it) }
           .onCompletion {

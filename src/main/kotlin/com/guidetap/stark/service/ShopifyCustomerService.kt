@@ -10,6 +10,7 @@ import kotlinx.coroutines.flow.flow
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
 import java.time.LocalDateTime
+import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
 
 @Service
@@ -28,7 +29,7 @@ class ShopifyCustomerService(
   suspend fun getCustomers(
     userId: String,
     pageInfo: String? = null,
-    lastSyncDate: LocalDateTime? = null
+    lastSyncDate: ZonedDateTime? = null
   ): PaginatedShopifyResponse<CustomerResponse> =
     managementAPIService.getUserData(userId)
       .let {
@@ -42,7 +43,7 @@ class ShopifyCustomerService(
         )
       }
 
-  fun getAllCustomers(userId: String, lastSyncDate: LocalDateTime?): Flow<Customer> =
+  fun getAllCustomers(userId: String, lastSyncDate: ZonedDateTime?): Flow<Customer> =
     flow {
       log.info("process='getAllCustomers' message='has been started' userId='$userId'")
       var pageInfo: String? = null

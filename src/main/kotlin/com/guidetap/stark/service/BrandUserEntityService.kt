@@ -16,7 +16,7 @@ class BrandUserEntityService(
   suspend fun findById(auth0Id: String) = brandUserEntityRepository.findById(auth0Id)
 
   suspend fun updateLastSyncDate(auth0Id: String, lastSync: ZonedDateTime?) =
-    brandUserEntityRepository.updateLastSyncDate(auth0Id, lastSync)
+    brandUserEntityRepository.updateCustomerLastSyncDate(auth0Id, lastSync)
 
   fun findAll(): Flow<BrandUserEntity> = brandUserEntityRepository.findAll()
 }

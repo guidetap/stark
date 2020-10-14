@@ -23,7 +23,8 @@ class CompleteSignInService(
                     nickname = parsedToken.token.claims["nickname"] as? String,
                     name = parsedToken.token.claims["name"] as? String,
                     email = parsedToken.token.claims["email"] as? String,
-                    lastSyncDate = null
+                    lastCustomerSyncDate = null,
+                    lastOrderSyncDate = null,
                   )
                 )
               }

@@ -27,10 +27,12 @@ class BrandUserEntityRepository(
         .returnDocument(ReturnDocument.AFTER)
     )
 
-  suspend fun updateLastSyncDate(auth0Id: String, lastSync: ZonedDateTime?): BrandUserEntity? =
+  suspend fun updateCustomerLastSyncDate(auth0Id: String, lastSync: ZonedDateTime?): BrandUserEntity? =
     col.findOneAndUpdate(
       BrandUserEntity::auth0Id eq auth0Id,
-      set(SetTo(BrandUserEntity::lastSyncDate, lastSync)),
+      set(
+        SetTo(BrandUserEntity::lastCustomerSyncDate, lastSync)
+      ),
       FindOneAndUpdateOptions()
         .returnDocument(ReturnDocument.AFTER)
     )
