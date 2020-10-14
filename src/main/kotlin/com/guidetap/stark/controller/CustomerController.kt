@@ -24,11 +24,11 @@ class CustomerController(
 
   @GetMapping
   fun getAllCustomers(@AuthenticationPrincipal authentication: Authentication): Flow<CustomerEntity> =
-    shopifyCustomerService.getAllCustomers(authentication.name)
+    shopifyCustomerService.getAllCustomers(authentication.name, null)
       .map { customerConverter.convert(it) }
 
   @PutMapping("sync")
-  fun syncCustomer(@AuthenticationPrincipal authentication: Authentication): Flow<CustomerEntity> =
+  suspend fun syncCustomer(@AuthenticationPrincipal authentication: Authentication): Flow<CustomerEntity> =
     shopifySyncService.syncShopifyCustomersFor(authentication.name)
 
 }

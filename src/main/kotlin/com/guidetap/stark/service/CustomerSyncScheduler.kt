@@ -24,7 +24,7 @@ class CustomerSyncScheduler(
           log.info("process='syncCustomers' message='next customer picked' userId='${it.auth0Id}'")
           val synced = shopifySyncService.syncShopifyCustomersFor(it.auth0Id)
             .count()
-          log.info("process='syncCustomers' message='' userId='${it.auth0Id}' count='$synced'")
+          log.info("process='syncCustomers' message='customer sync completed' userId='${it.auth0Id}' count='$synced'")
         }
     }
     log.info("process='syncCustomers' message='sync job has been completed'")

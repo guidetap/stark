@@ -8,6 +8,8 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 
 @Service
 class ShopifyCustomerService(
@@ -16,27 +18,36 @@ class ShopifyCustomerService(
   private val urlParser: UrlParser
 ) {
 
+  companion object {
+    val SHOPIFY_FORMATTER: DateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm")
+  }
+
   private val log = LoggerFactory.getLogger(javaClass)
 
-  suspend fun getCustomers(userId: String, pageInfo: String? = null): PaginatedCustomerResponse =
+  suspend fun getCustomers(
+    userId: String,
+    pageInfo: String? = null,
+    lastSyncDate: LocalDateTime? = null
+  ): PaginatedCustomerResponse =
     managementAPIService.getUserData(userId)
       .let {
         shopifyClient.getCustomers(
           GetCustomerRequest(
             domain = it.domain,
             token = it.identities.first().accessToken,
-            pageInfo = pageInfo
+            pageInfo = pageInfo,
+            updatedAtMin = lastSyncDate?.format(SHOPIFY_FORMATTER)
           )
         )
       }
 
-  fun getAllCustomers(userId: String): Flow<Customer> =
+  fun getAllCustomers(userId: String, lastSyncDate: LocalDateTime?): Flow<Customer> =
     flow {
       log.info("process='getAllCustomers' message='has been started' userId='$userId'")
       var pageInfo: String? = null
       while (true) {
         log.info("process='getAllCustomers' message='new request prepared' userId='$userId' pageInfo='$pageInfo'")
-        val customerSince = getCustomers(userId, pageInfo)
+        val customerSince = getCustomers(userId, pageInfo, lastSyncDate)
         if (customerSince.pageInfoUrl == null) {
           break
         }

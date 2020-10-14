@@ -23,9 +23,16 @@ class ShopifyClient(
         protocol = URLProtocol.HTTPS
       }
       header(SHOPIFY_TOKEN_HEADER, getCustomerRequest.token)
-      getCustomerRequest.pageInfo?.let { parameter("page_info", it) }
-      getCustomerRequest.createdAtMin?.let { parameter("created_at_min", it) }
-      getCustomerRequest.updatedAtMin?.let { parameter("updated_at_min", it) }
+      getCustomerRequest.pageInfo
+        ?.let { parameter("page_info", it) }
+
+      setIfPageInfo(getCustomerRequest.pageInfo) {
+        getCustomerRequest.createdAtMin?.let { parameter("created_at_min", it) }
+      }
+      setIfPageInfo(getCustomerRequest.pageInfo) {
+        getCustomerRequest.updatedAtMin?.let { parameter("updated_at_min", it) }
+      }
+
       parameter("limit", 250)
     }
       .let {
@@ -34,5 +41,8 @@ class ShopifyClient(
           it.headers["Link"]?.let { link -> pageInfoExtractor.extractPageInfo(link) }
         )
       }
+
+  fun HttpRequestBuilder.setIfPageInfo(pageInfo: String?, apply: HttpRequestBuilder.() -> Unit): Any =
+    pageInfo ?: apply()
 
 }

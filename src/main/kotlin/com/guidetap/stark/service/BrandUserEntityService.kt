@@ -13,6 +13,8 @@ class BrandUserEntityService(
 
   suspend fun insert(entity: BrandUserEntity) = brandUserEntityRepository.insert(entity)
 
+  suspend fun findById(auth0Id: String) = brandUserEntityRepository.findById(auth0Id)
+
   suspend fun updateLastSyncDate(auth0Id: String, lastSync: ZonedDateTime?) =
     brandUserEntityRepository.updateLastSyncDate(auth0Id, lastSync)
 
