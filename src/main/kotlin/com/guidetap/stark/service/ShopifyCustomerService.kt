@@ -19,7 +19,7 @@ class ShopifyCustomerService(
 ) {
 
   companion object {
-    val SHOPIFY_FORMATTER: DateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm")
+    val SHOPIFY_FORMATTER: DateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:SS")
   }
 
   private val log = LoggerFactory.getLogger(javaClass)
@@ -48,13 +48,14 @@ class ShopifyCustomerService(
       while (true) {
         log.info("process='getAllCustomers' message='new request prepared' userId='$userId' pageInfo='$pageInfo'")
         val customerSince = getCustomers(userId, pageInfo, lastSyncDate)
+        customerSince.customerResponse.customers.forEach {
+          emit(it)
+        }
         if (customerSince.pageInfoUrl == null) {
           break
         }
         pageInfo = urlParser.extractParamUrl(customerSince.pageInfoUrl, "page_info")
-        customerSince.customerResponse.customers.forEach {
-          emit(it)
-        }
+
       }
     }
 }
