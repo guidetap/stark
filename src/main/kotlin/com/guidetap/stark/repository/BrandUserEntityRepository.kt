@@ -10,7 +10,7 @@ import org.litote.kmongo.coroutine.CoroutineDatabase
 import org.litote.kmongo.eq
 import org.litote.kmongo.set
 import org.springframework.stereotype.Repository
-import java.time.LocalDateTime
+import java.time.ZonedDateTime
 
 @Repository
 class BrandUserEntityRepository(
@@ -27,7 +27,7 @@ class BrandUserEntityRepository(
         .returnDocument(ReturnDocument.AFTER)
     )
 
-  suspend fun updateLastSyncDate(auth0Id: String, lastSync: LocalDateTime): BrandUserEntity? =
+  suspend fun updateLastSyncDate(auth0Id: String, lastSync: ZonedDateTime?): BrandUserEntity? =
     col.findOneAndUpdate(
       BrandUserEntity::auth0Id eq auth0Id,
       set(SetTo(BrandUserEntity::lastSyncDate, lastSync)),
