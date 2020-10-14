@@ -1,6 +1,6 @@
 package com.guidetap.stark.client.model
 
-data class GetCustomerRequest(
+data class ShopifyGetRequest(
   val domain: String,
   val token: String,
   val pageInfo: String? = null,

@@ -2,8 +2,9 @@ package com.guidetap.stark.service
 
 import com.guidetap.stark.client.ShopifyClient
 import com.guidetap.stark.client.model.Customer
-import com.guidetap.stark.client.model.GetCustomerRequest
-import com.guidetap.stark.client.model.PaginatedCustomerResponse
+import com.guidetap.stark.client.model.CustomerResponse
+import com.guidetap.stark.client.model.ShopifyGetRequest
+import com.guidetap.stark.client.model.PaginatedShopifyResponse
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import org.slf4j.LoggerFactory
@@ -28,11 +29,11 @@ class ShopifyCustomerService(
     userId: String,
     pageInfo: String? = null,
     lastSyncDate: LocalDateTime? = null
-  ): PaginatedCustomerResponse =
+  ): PaginatedShopifyResponse<CustomerResponse> =
     managementAPIService.getUserData(userId)
       .let {
         shopifyClient.getCustomers(
-          GetCustomerRequest(
+          ShopifyGetRequest(
             domain = it.domain,
             token = it.identities.first().accessToken,
             pageInfo = pageInfo,
@@ -48,14 +49,13 @@ class ShopifyCustomerService(
       while (true) {
         log.info("process='getAllCustomers' message='new request prepared' userId='$userId' pageInfo='$pageInfo'")
         val customerSince = getCustomers(userId, pageInfo, lastSyncDate)
-        customerSince.customerResponse.customers.forEach {
+        customerSince.shopifyResponse.customers.forEach {
           emit(it)
         }
         if (customerSince.pageInfoUrl == null) {
           break
         }
         pageInfo = urlParser.extractParamUrl(customerSince.pageInfoUrl, "page_info")
-
       }
     }
 }
