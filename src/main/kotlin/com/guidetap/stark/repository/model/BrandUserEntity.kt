@@ -7,6 +7,10 @@ data class BrandUserEntity(
   val nickname: String?,
   val name: String?,
   val email: String?,
-  val lastCustomerSyncDate: ZonedDateTime?,
-  val lastOrderSyncDate: ZonedDateTime?
+  val syncData: SyncData,
+)
+
+data class SyncData(
+  val lastCustomerDate: ZonedDateTime?,
+  val lastOrderDate: ZonedDateTime?
 )

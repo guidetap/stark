@@ -1,12 +1,14 @@
 package com.guidetap.stark.repository
 
 import com.guidetap.stark.repository.model.BrandUserEntity
+import com.guidetap.stark.repository.model.SyncData
 import com.mongodb.client.model.FindOneAndReplaceOptions
 import com.mongodb.client.model.FindOneAndUpdateOptions
 import com.mongodb.client.model.ReturnDocument
 import kotlinx.coroutines.flow.Flow
 import org.litote.kmongo.SetTo
 import org.litote.kmongo.coroutine.CoroutineDatabase
+import org.litote.kmongo.div
 import org.litote.kmongo.eq
 import org.litote.kmongo.set
 import org.springframework.stereotype.Repository
@@ -31,7 +33,7 @@ class BrandUserEntityRepository(
     col.findOneAndUpdate(
       BrandUserEntity::auth0Id eq auth0Id,
       set(
-        SetTo(BrandUserEntity::lastCustomerSyncDate, lastSync)
+        SetTo(BrandUserEntity::syncData / SyncData::lastCustomerDate, lastSync)
       ),
       FindOneAndUpdateOptions()
         .returnDocument(ReturnDocument.AFTER)

@@ -8,6 +8,8 @@ import org.jeasy.random.EasyRandom
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import java.time.ZonedDateTime
+import java.util.Comparator
+import kotlin.math.exp
 
 internal class BrandUserEntityRepositoryTest(
   @Autowired
@@ -22,10 +24,14 @@ internal class BrandUserEntityRepositoryTest(
       val expected = random.nextObject(BrandUserEntity::class.java)
       val actual = brandUserEntityRepository.insert(expected)
       assertThat(actual)
-        .isEqualToIgnoringGivenFields(expected, "lastCustomerSyncDate", "lastOrderSyncDate")
+        .usingRecursiveComparison()
+        .ignoringFields("syncData")
+        .isEqualTo(expected)
 
       assertThat(brandUserEntityRepository.findById(expected.auth0Id))
-        .isEqualToIgnoringGivenFields(expected, "lastCustomerSyncDate", "lastOrderSyncDate")
+        .usingRecursiveComparison()
+        .ignoringFields("syncData")
+        .isEqualTo(expected)
     }
   }
 
@@ -36,10 +42,14 @@ internal class BrandUserEntityRepositoryTest(
       brandUserEntityRepository.insert(expected)
       val actual = brandUserEntityRepository.insert(expected)
       assertThat(actual)
-        .isEqualToIgnoringGivenFields(expected, "lastCustomerSyncDate", "lastOrderSyncDate")
+        .usingRecursiveComparison()
+        .ignoringFields("syncData")
+        .isEqualTo(expected)
 
       assertThat(brandUserEntityRepository.findById(expected.auth0Id))
-        .isEqualToIgnoringGivenFields(expected, "lastCustomerSyncDate", "lastOrderSyncDate")
+        .usingRecursiveComparison()
+        .ignoringFields("syncData")
+        .isEqualTo(expected)
     }
   }
 
@@ -54,9 +64,9 @@ internal class BrandUserEntityRepositoryTest(
         auth0Id = entity.auth0Id,
         lastSync = lastSync
       )
-      assertThat(actual?.lastCustomerSyncDate)
+      assertThat(actual?.syncData?.lastCustomerDate)
         .isEqualToIgnoringNanos(lastSync)
-      assertThat(brandUserEntityRepository.findById(entity.auth0Id)?.lastCustomerSyncDate)
+      assertThat(brandUserEntityRepository.findById(entity.auth0Id)?.syncData?.lastCustomerDate)
         .isEqualToIgnoringNanos(lastSync)
     }
   }

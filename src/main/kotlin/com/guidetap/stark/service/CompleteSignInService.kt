@@ -1,6 +1,7 @@
 package com.guidetap.stark.service
 
 import com.guidetap.stark.repository.model.BrandUserEntity
+import com.guidetap.stark.repository.model.SyncData
 import org.springframework.stereotype.Service
 
 @Service
@@ -23,8 +24,10 @@ class CompleteSignInService(
                     nickname = parsedToken.token.claims["nickname"] as? String,
                     name = parsedToken.token.claims["name"] as? String,
                     email = parsedToken.token.claims["email"] as? String,
-                    lastCustomerSyncDate = null,
-                    lastOrderSyncDate = null,
+                    syncData = SyncData(
+                      lastCustomerDate = null,
+                      lastOrderDate = null,
+                    ),
                   )
                 )
               }
