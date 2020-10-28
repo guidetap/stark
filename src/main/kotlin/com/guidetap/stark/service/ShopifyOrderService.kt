@@ -10,7 +10,7 @@ import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
 
 @Service
-class ShopifyCustomerService(
+class ShopifyOrderService(
   private val shopifyClient: ShopifyClient,
   private val managementAPIService: ManagementAPIService,
   private val urlParser: UrlParser
@@ -22,14 +22,14 @@ class ShopifyCustomerService(
 
   private val log = LoggerFactory.getLogger(javaClass)
 
-  suspend fun getCustomers(
+  suspend fun getOrders(
     userId: String,
     pageInfo: String? = null,
     lastSyncDate: ZonedDateTime? = null
-  ): PaginatedShopifyResponse<CustomerResponse> =
+  ): PaginatedShopifyResponse<OrderResponse> =
     managementAPIService.getUserData(userId)
       .let {
-        shopifyClient.getCustomers(
+        shopifyClient.getOrders(
           ShopifyGetRequest(
             domain = it.domain,
             token = it.identities.first().accessToken,
@@ -39,20 +39,20 @@ class ShopifyCustomerService(
         )
       }
 
-  fun getAllCustomers(userId: String, lastSyncDate: ZonedDateTime?): Flow<Customer> =
+  fun getAllOrders(userId: String, lastSyncDate: ZonedDateTime?): Flow<Order> =
     flow {
       log.info("process='getAllCustomers' message='has been started' userId='$userId'")
       var pageInfo: String? = null
       while (true) {
         log.info("process='getAllCustomers' message='new request prepared' userId='$userId' pageInfo='$pageInfo'")
-        val customerSince = getCustomers(userId, pageInfo, lastSyncDate)
-        customerSince.shopifyResponse.customers.forEach {
+        val ordersSince = getOrders(userId, pageInfo, lastSyncDate)
+        ordersSince.shopifyResponse.orders.forEach {
           emit(it)
         }
-        if (customerSince.pageInfoUrl == null) {
+        if (ordersSince.pageInfoUrl == null) {
           break
         }
-        pageInfo = urlParser.extractParamUrl(customerSince.pageInfoUrl, "page_info")
+        pageInfo = urlParser.extractParamUrl(ordersSince.pageInfoUrl, "page_info")
       }
     }
 }

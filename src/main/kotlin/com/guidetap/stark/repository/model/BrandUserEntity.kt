@@ -7,7 +7,7 @@ data class BrandUserEntity(
   val nickname: String?,
   val name: String?,
   val email: String?,
-  val syncData: SyncData,
+  val syncData: SyncData?,
 )
 
 data class SyncData(
